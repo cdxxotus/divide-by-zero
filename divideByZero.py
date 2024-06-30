@@ -1,5 +1,3 @@
-import json
-
 def bitwise_simulation_divide(numerator, denominator, precision=10):
     quotient = 0
     remainder = numerator
@@ -27,23 +25,18 @@ def bitwise_simulation_divide(numerator, denominator, precision=10):
     result = quotient + fractional_part
     return result
 
-def demonstrate_division():
-    numerators = [0, 1, 3, 9, 100]
-    denominators = [0, 1, 2, 3, 9, 500, 100]
-    precisions = [1, 5, 20, 100, 1000]
+def generate_division_by_zero_table():
+    results = []
+    denominator = 0
+    precision = 10000  # fixed precision for this example
 
-    results = {}
+    for numerator in range(101):  # 0 to 100
+        result = bitwise_simulation_divide(numerator, denominator, precision)
+        results.append(f"{numerator} divisé par {denominator} = {result}")
 
-    for numerator in numerators:
-        results[numerator] = {}
-        for denominator in denominators:
-            results[numerator][denominator] = {}
-            for precision in precisions:
-                result = bitwise_simulation_divide(numerator, denominator, precision)
-                results[numerator][denominator][precision] = result
+    return results
 
-    # Print results in a human-readable JSON format
-    print(json.dumps(results, indent=4))
-
-if __name__ == "__main__":
-    demonstrate_division()
+# Generate and print the division by 0 table
+division_by_zero_table = generate_division_by_zero_table()
+for line in division_by_zero_table:
+    print(line)
