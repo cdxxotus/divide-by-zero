@@ -1,7 +1,6 @@
-def bitwise_simulation_divide(numerator, denominator, precision=10):
-    if denominator == 0:
-        print("Indéfini (Division par zéro)")
+import json
 
+def bitwise_simulation_divide(numerator, denominator, precision=10):
     quotient = 0
     remainder = numerator
     num_bits = numerator.bit_length()
@@ -28,29 +27,23 @@ def bitwise_simulation_divide(numerator, denominator, precision=10):
     result = quotient + fractional_part
     return result
 
-def main():
-    numerator = 42  # Numerator is fixed at 42
+def demonstrate_division():
+    numerators = [0, 1, 3, 9, 100]
+    denominators = [0, 1, 2, 3, 9, 500, 100]
+    precisions = [1, 5, 20, 100, 1000]
 
-    while True:
-        try:
-            denominator_input = input("Veuillez entrer le dénominateur: ")
-            denominator = int(denominator_input)
-            break
-        except ValueError:
-            print("Entrée invalide. Veuillez entrer un nombre entier.")
+    results = {}
 
-    while True:
-        try:
-            precision_input = input("Veuillez entrer la précision (nombre de décimales): ")
-            precision = int(precision_input)
-            if precision < 0:
-                raise ValueError("La précision doit être un nombre entier positif.")
-            break
-        except ValueError:
-            print("Entrée invalide. Veuillez entrer un nombre entier positif.")
+    for numerator in numerators:
+        results[numerator] = {}
+        for denominator in denominators:
+            results[numerator][denominator] = {}
+            for precision in precisions:
+                result = bitwise_simulation_divide(numerator, denominator, precision)
+                results[numerator][denominator][precision] = result
 
-    result = bitwise_simulation_divide(numerator, denominator, precision)
-    print(f"Résultat de la division bitwise avec précision: {result}")
+    # Print results in a human-readable JSON format
+    print(json.dumps(results, indent=4))
 
 if __name__ == "__main__":
-    main()
+    demonstrate_division()
